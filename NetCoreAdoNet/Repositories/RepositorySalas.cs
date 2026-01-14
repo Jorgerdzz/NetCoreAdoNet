@@ -34,8 +34,8 @@ namespace NetCoreAdoNet.Repositories
                 string nombre = this.reader["NOMBRE"].ToString();
                 salas.Add(nombre);
             }
-            this.reader.CloseAsync();
-            this.cn.CloseAsync();
+            await this.reader.CloseAsync();
+            await this.cn.CloseAsync();
             return salas;
         }
 
@@ -51,7 +51,7 @@ namespace NetCoreAdoNet.Repositories
             this.com.CommandText = sql;
             await this.cn.OpenAsync();
             int registros = await this.com.ExecuteNonQueryAsync();
-            this.cn.CloseAsync();
+            await this.cn.CloseAsync();
             this.com.Parameters.Clear();
             return registros;
         }

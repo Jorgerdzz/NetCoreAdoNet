@@ -19,9 +19,9 @@ namespace NetCoreAdoNet
             this.loadSalas();
         }
 
-        private void loadSalas()
+        private async void loadSalas()
         {
-            List<string> salas = this.repo.GetNombresSalas();
+            List<string> salas = await this.repo.GetNombresSalasAsync();
             this.lstSalas.Items.Clear();
             foreach(string name in salas)
             {
@@ -29,11 +29,11 @@ namespace NetCoreAdoNet
             }
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private async void btnUpdate_Click(object sender, EventArgs e)
         {
             string newName = this.txtNombre.Text;
             string oldName = this.lstSalas.SelectedItem.ToString();
-            int registros = this.repo.updateSala(newName, oldName);
+            int registros = await this.repo.updateSalaAsync(newName, oldName);
             MessageBox.Show("Salas modificadas: " + registros);
             this.loadSalas();
         }
