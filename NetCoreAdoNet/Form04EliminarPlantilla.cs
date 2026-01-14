@@ -44,14 +44,29 @@ namespace NetCoreAdoNet
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            string empleadoNO = this.txtEmpleadono.Text;
-            string sql = "delete from PLANTILLA where EMPLEADO_NO=" + empleadoNO;
+            int empleadoNO = int.Parse(this.txtEmpleadono.Text);
+            string sql = "delete from PLANTILLA where EMPLEADO_NO=@empleadoNO";
+            //DEBEMOS CONFIGURAR LOS PARAMETROS
+            SqlParameter pamIns = new SqlParameter("@empleadoNO", empleadoNO); //SOLO HACER ESTO PARA TIPOS PRIMITIVOS
+            //EL NOMBRE DEL PARAMETRO NUNCA PUEDE ESTAR REPETIDO, NOS DARA ERROR
+            //pamIns.ParameterName = "@empleadoNO";
+            ////INDICAR TIPO DE DATO
+            //pamIns.DbType = DbType.Int32;
+            ////POR DEFECTO, LA DIRECCION ES INPUT
+            //pamIns.Direction = ParameterDirection.Input;
+            ////VALOR DEL PARAMETRO PARA SUSTITUIR EN LA CONSULTA
+            //pamIns.Value = empleadoNO;
+            ////AGREGAMOS EL PARAMETRO A LA COLECCION
+            //this.com.Parameters.Add(pamIns);
+
             this.com.Connection = this.cn;
             this.com.CommandType = CommandType.Text;
             this.com.CommandText = sql;
             this.cn.Open();
             int registros = this.com.ExecuteNonQuery();
             this.cn.Close();
+            //DEBEMOS ELIMINAR LOS PARAMETROS
+            this.com.Parameters.Clear();
             this.loadPlantilla();
             MessageBox.Show("Empleados eliminados: " + registros);
 
