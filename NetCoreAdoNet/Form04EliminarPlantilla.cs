@@ -48,6 +48,8 @@ namespace NetCoreAdoNet
             string sql = "delete from PLANTILLA where EMPLEADO_NO=@empleadoNO";
             //DEBEMOS CONFIGURAR LOS PARAMETROS
             SqlParameter pamIns = new SqlParameter("@empleadoNO", empleadoNO); //SOLO HACER ESTO PARA TIPOS PRIMITIVOS
+            
+            //HACER ESTO PARA TIPOS NO PRIMITIVOS:
             //EL NOMBRE DEL PARAMETRO NUNCA PUEDE ESTAR REPETIDO, NOS DARA ERROR
             //pamIns.ParameterName = "@empleadoNO";
             ////INDICAR TIPO DE DATO
