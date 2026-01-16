@@ -78,44 +78,59 @@ namespace NetCoreAdoNet.Repositories
 
         public async Task<int> GetSumaSalarioOficioAsync(string oficio)
         {
-            string sql = "select SUM(SALARIO) from EMP where OFICIO=@oficio";
+            string sql = "select SUM(SALARIO) as suma from EMP where OFICIO=@oficio";
             SqlParameter pamOfi = new SqlParameter("@oficio", oficio);
             this.com.Parameters.Add(pamOfi);
             this.com.CommandType = System.Data.CommandType.Text;
             this.com.CommandText = sql;
             await this.cn.OpenAsync();
-            int registros = await this.com.ExecuteNonQueryAsync();
+            this.reader = await this.com.ExecuteReaderAsync();
+            int suma = 0;
+            while (await this.reader.ReadAsync())
+            {
+                suma = int.Parse(this.reader["suma"].ToString());
+            }
             await this.cn.CloseAsync();
             this.com.Parameters.Clear();
-            return registros;
+            return suma;
         }
 
         public async Task<int> GetMediaSalarialOficioAsync(string oficio)
         {
-            string sql = "select SUM(SALARIO) from EMP where OFICIO=@oficio";
+            string sql = "select AVG(SALARIO) as media from EMP where OFICIO=@oficio";
             SqlParameter pamOfi = new SqlParameter("@oficio", oficio);
             this.com.Parameters.Add(pamOfi);
             this.com.CommandType = System.Data.CommandType.Text;
             this.com.CommandText = sql;
             await this.cn.OpenAsync();
-            int registros = await this.com.ExecuteNonQueryAsync();
+            this.reader = await this.com.ExecuteReaderAsync();
+            int media = 0;
+            while (await this.reader.ReadAsync())
+            {
+                media = int.Parse(this.reader["media"].ToString());
+            }
             await this.cn.CloseAsync();
             this.com.Parameters.Clear();
-            return registros;
+            return media;
         }
 
         public async Task<int> GetMaxSalarioAsync(string oficio)
         {
-            string sql = "select MAX(SALARIO) from EMP where OFICIO=@oficio";
+            string sql = "select MAX(SALARIO) as max from EMP where OFICIO=@oficio";
             SqlParameter pamOfi = new SqlParameter("@oficio", oficio);
             this.com.Parameters.Add(pamOfi);
             this.com.CommandType = System.Data.CommandType.Text;
             this.com.CommandText = sql;
             await this.cn.OpenAsync();
-            int registros = await this.com.ExecuteNonQueryAsync();
+            this.reader = await this.com.ExecuteReaderAsync();
+            int max = 0;
+            while(await this.reader.ReadAsync())
+            {
+                max = int.Parse(this.reader["max"].ToString());
+            }
             await this.cn.CloseAsync();
             this.com.Parameters.Clear();
-            return registros;
+            return max;
         }
 
     }
