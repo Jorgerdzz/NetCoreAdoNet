@@ -3,10 +3,11 @@ using NetCoreAdoNet.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.Metrics;
 using System.Text;
 
 #region STORED PROCEDURES
-//create procedure SP_EMPLEADOS_DEPARTAMENTOS_OUT
+//alter procedure SP_EMPLEADOS_DEPARTAMENTOS_OUT
 //(@nombre nvarchar(50),
 //    @suma int OUT,
 //    @media int OUT,
@@ -17,7 +18,7 @@ using System.Text;
 //	--LA CONSULTA DLE PROCEDIMIENTO
 //	select * from EMP where DEPT_NO = @iddept
 //	--Rellenamos las variables de salida
-//	select @suma = SUM(SALARIO), @media = AVG(SALARIO), @personas = COUNT(EMP_NO) from EMP
+//	select @suma = isnull(SUM(SALARIO),0), @media = isnull(AVG(SALARIO), 0), @personas = COUNT(EMP_NO) from EMP
 //	where DEPT_NO = @iddept
 //go
 #endregion
