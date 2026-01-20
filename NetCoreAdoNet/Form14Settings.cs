@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using NetCoreAdoNet.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -46,5 +47,25 @@ namespace NetCoreAdoNet
             this.BackColor = Color.FromName(colorFondo);
         }
 
+        private void btnLeerHelper_Click(object sender, EventArgs e)
+        {
+            IConfigurationRoot configuration = HelperConfiguration.GetConfiguration();
+            //EXISTEN KEYS YA CONFIGURADAS Y PODEMOS RECUPERARLAS CON METODOS NATIVOS
+            //LAS KEYS DIFERENCIAN MAYUSCULAS DE MINUSCULAS
+            string connectionString = configuration.GetConnectionString("SqlLocalTajamar");
+            this.lblConexion.Text = connectionString;
+            //SI NO SON KEYS CONOCIDAS, DEBEMOS NAVEGAR HASTA ELLAS
+            //LA NAVEGACION ENTRE JEYS SE ESTABLECE MEDIANTE:
+            //KeyPrincipal: SubKey
+            //KeyPrincipal: SubKey:OtraSubKey
+            string imagen1 = configuration.GetSection("Imagenes:imagen1").Value;
+            string imagen2 = configuration.GetSection("Imagenes:imagen2").Value;
+            string colorLetra = configuration.GetSection("Colores:letra").Value;
+            string colorFondo = configuration.GetSection("Colores:fondo").Value;
+            this.pictureBox1.Load(imagen1);
+            this.pictureBox2.Load(imagen2);
+            this.btnLeerSettings.ForeColor = Color.FromName(colorLetra);
+            this.BackColor = Color.FromName(colorFondo);
+        }
     }
 }
